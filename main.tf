@@ -30,3 +30,19 @@ resource "aws_internet_gateway" "main_internet_gateway" {
     Name = "dev-igw"
   }
 }
+
+# CREATE AWS ROUTE TABLE
+resource "aws_route_table" "main_route_table" {
+  vpc_id = aws_vpc.main_vpc.id
+
+  tags = {
+    Name = "dev-rt"
+  }
+}
+
+# CREATE AWS ROUTE RESOURCE
+resource "aws_route" "main_route" {
+  route_table_id         = aws_route_table.main_route_table.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.main_internet_gateway.id
+}
