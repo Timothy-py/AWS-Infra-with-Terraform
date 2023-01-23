@@ -58,3 +58,26 @@ resource "aws_route_table_association" "rt-subnet-assoc" {
 #   gateway_id = aws_internet_gateway.main_internet_gateway.id
 #   route_table_id = aws_route_table.main_route_table.id
 # }
+
+# CREATE SECURITY GROUP
+resource "aws_security_group" "main_sg" {
+  name        = "dev_sg"
+  description = "dev main security group"
+  vpc_id      = aws_vpc.main_vpc.id
+
+  ingress {
+    description = "Allow all"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "Allow all"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
