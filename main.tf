@@ -81,3 +81,10 @@ resource "aws_security_group" "main_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+
+# CREATE EC2 KEY PAIR
+resource "aws_key_pair" "main_key_pair" {
+  key_name   = "main_terraform"
+  public_key = file("~/.ssh/main_terraform.pub")
+}
