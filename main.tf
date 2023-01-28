@@ -91,18 +91,18 @@ resource "aws_key_pair" "main_key_pair" {
 
 # CREATE AN EC2 INSTANCE
 resource "aws_instance" "main_instance" {
-  instance_type = "t2.micro"
-  ami           = data.aws_ami.server_ami.id
-
-  tags = {
-    Name = "dev-mode"
-  }
-
+  instance_type          = "t2.micro"
+  ami                    = data.aws_ami.server_ami.id
   key_name               = aws_key_pair.main_key_pair.id
   vpc_security_group_ids = [aws_security_group.main_sg.id]
   subnet_id              = aws_subnet.main_public_subnet.id
+  user_data              = file("userdata.tpl")
 
   root_block_device {
     volume_size = 10
+  }
+
+  tags = {
+    Name = "dev-mode"
   }
 }
