@@ -1,13 +1,36 @@
-#!/usr/bin/env bash
-sudo apt-get update -y &&
+#!/bin/bash
+
+# Update the package index
+sudo apt-get update
+
+# Install the dependencies for Docker installation
 sudo apt-get install -y \
-apt-transport-https \
-ca-certificates \
-curl \
-gnupg-agent \
-software-properties-common &&
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - &&
-sudo add-apt-repository "deb [arch-amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" &&
-sudo apt-get update -y &&
-sudo sudo apt-get install docker-ce docker-ce-cli containerd.io -y &&
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+
+# Add the Docker GPG key
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+# Add the Docker repository to the sources list
+sudo add-apt-repository \
+    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+
+# Update the package index again
+sudo apt-get update
+
+# Install the latest version of Docker
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+
+# Start the Docker service
+sudo systemctl start docker
+
+# Enable the Docker service to start at boot
+sudo systemctl enable docker
+
+# Add ubuntu user to docker group
 sudo usermod -aG docker ubuntu

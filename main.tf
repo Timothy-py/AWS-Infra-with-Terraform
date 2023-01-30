@@ -103,6 +103,6 @@ resource "aws_instance" "main_instance" {
   }
 
   tags = {
-    Name = "dev-mode"
+    Name = "Terraform"
   }
 }
