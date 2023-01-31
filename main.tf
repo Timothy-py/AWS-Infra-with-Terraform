@@ -105,4 +105,13 @@ resource "aws_instance" "main_instance" {
   tags = {
     Name = "Terraform"
   }
+
+  provisioner "local-exec" {
+    command = templatefile("linux-ssh-config.tpl", {
+      hostname = self.public_ip,
+      user = "ubuntu",
+      identityfile = "~/.ssh/main_terraform"
+    })
+    interpreter = ["bash", "-c"]
+  }
 }
