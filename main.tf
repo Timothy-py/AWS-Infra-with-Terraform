@@ -112,6 +112,6 @@ resource "aws_instance" "main_instance" {
       user = "ubuntu",
       identityfile = "~/.ssh/main_terraform"
     })
-    interpreter = ["bash", "-c"]
+    interpreter = var.host_os == "linux" ? ["bash", "-c"] : ["Powershell", "-Command"]
   }
 }
